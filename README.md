@@ -1,4 +1,4 @@
-# Questions
+# Twenty-Something Questions
 Given a set of creatures, how do you construct the best question list to uniquely identify them?
 
 # Motivation
