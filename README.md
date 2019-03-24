@@ -9,15 +9,15 @@ For example, if you have "cat", "bat", "cassowary", and "killdeer", you could as
 Let's define some terms.  We have C creatures, named a, b, c, etc.  We have A attributes represented by the natural numbers, 1, 2, ... (1-based because I'm a human).  For each creature-attribute pair, we have a boolean result.  This matrix of booleans is our input, Z (um, for zoo?).  We can picture this as a vector of bitmaps.  In addition, for any Z there are C implicit identity attributes (e.g. "c?"), each of which is false for every creature save one.  For brevity we won't include them in representations.  For any Z there is some set Q of question lists, each containing N questions, and each being sufficient to distinguish among all C creatures.
 
 To summarize:
-C = number of creatures
-a = some creature
-A = number of attributes or boolean questions
-1? = some attribute or question
-Z = the truth table for C X A
-a? = some identity question
-Q = the set of minimal question lists
-N = the minimum number of questions
-L = some question list
+   * C = number of creatures
+   * a = some creature
+   * A = number of attributes or boolean questions
+   * 1? = some attribute or question
+   * Z = the truth table for C X A
+   * a? = some identity question
+   * Q = the set of minimal question lists
+   * N = the minimum number of questions
+   * L = some question list
 
 For example, suppose our input is "a:TTF, b:FFF, c:TTT".  If we ask, "1?,2?" and the answer is "F,F", then we have identified b.  But if the answer is "T,T", both a and b are possible.  Therefore "1?,2?" is not in Q.  But "2?,3?" is.  So is "2?,c?".  So L <= 2.
 
