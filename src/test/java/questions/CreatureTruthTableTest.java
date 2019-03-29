@@ -6,19 +6,33 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
 
 public class CreatureTruthTableTest {
 
+    // helper method
+    static CreatureTruthTable load( String ... line ) throws IOException, AvmException {
+    	String table = "";
+    	for(int i=0; i<line.length; i++) {
+    		table += line[i] + '\n';
+    	}
+    	return CttIo.read(new StringReader(table) );
+    	
+    }
+
+    // helper method
+    static List<CreatureTruthTable.Attribute> asList(CreatureTruthTable.Attribute ... attr ) { 
+    	return new ArrayList<>(Arrays.asList( attr ) );
+    }
+    
     @Test public void testRangeExceptions() throws IOException, AvmException {
-    	CreatureTruthTable ctt = CttIo.read( new StringReader(
-        			"2 2\n" +
-        			"1 1\n" +
-        			"1 1\n" +
-        			"EOD" ) );
+    	CreatureTruthTable ctt = load(
+        			"2 2",
+        			"1 1",
+        			"1 1",
+        			"EOD" );
     	
     	// constructor attribute too low
     	try {
@@ -54,20 +68,6 @@ public class CreatureTruthTableTest {
     		//expected
     	}
     }
-    // helper method
-    static CreatureTruthTable load( String ... line ) throws IOException, AvmException {
-    	String table = "";
-    	for(int i=0; i<line.length; i++) {
-    		table += line[i] + '\n';
-    	}
-    	return CttIo.read(new StringReader(table) );
-    	
-    }
-
-    // helper method
-    static List<CreatureTruthTable.Attribute> asList(CreatureTruthTable.Attribute ... attr ) { 
-    	return new ArrayList<>(Arrays.asList( attr ) );
-    }
 
     @Test public void testTrivialCases() throws IOException, AvmException {
     	
@@ -80,9 +80,10 @@ public class CreatureTruthTableTest {
     	);
 
     	// A single creature requires no questions
-    	ctt = load( "1 2",
-        			"1 1",
-        			"EOD" );
+    	ctt = load(
+    		 	"1 2",
+    			"1 1",
+    			"EOD" );
     	assertTrue(
     	ctt.listDifferentiatesAmongAll( asList(/*empty*/) )
     	);
