@@ -1,4 +1,4 @@
-# Twenty-Something Questions
+# Animal, Vegetable, or Minimal?
 Given a set of creatures, how do you construct the best question list to uniquely identify them?
 
 # Motivation
@@ -50,3 +50,12 @@ Here's some things to code
    * Methods that return with any give L is sufficient, and whether it contains identity attributes.
    * A brute-force method that finds solutions.
    * Attempt to find a faster algorithm.
+
+# Implementation Notes
+   * More time getting gradle and eclipse to play nice than coding.  Not entirely successful.
+   * Tried object streams and serializable but Writer is working well enough for now.
+   * Considered CSV, YAML, but the format I ended up with is simple.
+   * If this were a real program we'd add names to creatures and text to attributes.
+   * I never know the rules for flush and close.  Gotta refresh.
+   * I am super inconsistent about spacing around parentheses.
+  
