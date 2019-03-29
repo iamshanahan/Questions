@@ -121,7 +121,7 @@ public class CreatureTruthTableTest {
     
 
     @Test public void testTwoPlusAttributes() throws IOException, AvmException {
-    	// A very small table
+    	// A small table
     	CreatureTruthTable ctt = load(
         			"4 3",
         			"1 1 1",
