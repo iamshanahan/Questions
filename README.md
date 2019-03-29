@@ -29,7 +29,7 @@ Now we can ask some interesting (to me) questions
 
 # A bit of analysis
 A few early results:
-1. It is an error if C = 0.  Asking, "how many questions must I ask to distinguish among no creatures" makes no sense.
+1. If C=0 the minimal question list is the empty set.  At first I thought this was an error, but my code disagreed, and so I had to think about it some more.
 2. If C = 1 the minimal question list is the empty set.
 3. 2^N >= C.  Or N >= log-base-2 C.  Three questions only have 8 possible outcomes, so those aren't enough questions for 12 creatures.
 4. If we allow identity questions, N <= C-1.
