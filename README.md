@@ -2,7 +2,11 @@
 Given a set of creatures, how do you construct the best question list to uniquely identify them?
 
 # Motivation
-In the children's game "twenty questions", one asks a series of boolean questions to eventually identify a creature.  It is obvious to anyone who's played it that the questions are sequentially conditional, that is, what one asks for question 3 will depend on the answers to 1 and 2.  (First you ask if it's a fish, then if yes, you ask if it's a shark.)  This project explores the idea that the questions are fixed.  So you have some creatures, and you have some yes/no questions or attributes, and you know the answer to the question for each creature.  Your job is to come up with a list of questions whose answers are guaranteed to identify any creature.
+
+There is a pleasant intersection between discrete math problems and computation problems where the answer is an algorithm 
+In the children's game "twenty questions", one asks a series of boolean questions to eventually identify a creature.  It is obvious to anyone who's played it that the questions are sequentially conditional, that is, what one asks for question 3 will depend on the answers to 1 and 2.  If you first ask, "Is it a fish?", you will only ask, "Is it a shark?" if the answer is "yes".
+
+This project explores the idea that the questions are fixed.  Suppose you have some creatures, and you have some yes/no questions or attributes, and you know the answer to the question for each creature.  Your job is to come up with a fixed list of questions whose answers are guaranteed to identify any creature.
 
 For example, if you have "cat", "bat", "cassowary", and "killdeer", you could ask, "Does it have feathers, and does it fly?".  Then "yes, no" would yield cassowary, while "no, yes" would yield bat.  Now if you add "beaver" to the possibilities, then in order to have enough questions you must either add another piece of information ("Does it have feathers, does it fly, and is it the Oregon state animal?") or default to a degenerate identity fact ( "Does it have feathers, does it fly, and is it a beaver?").
 
@@ -13,7 +17,7 @@ To summarize:
    * a = some creature
    * A = number of attributes or boolean questions
    * 1? = some attribute or question
-   * Z = the truth table for C X A
+   * Z = the truth table for C X A (with identity matrix for C column-appended).
    * a? = some identity question
    * Q = the set of minimal question lists
    * N = the minimum number of questions
@@ -33,7 +37,7 @@ A few early results:
 2. If C = 1 the minimal question list is the empty set.
 3. 2^N >= C.  Or N >= log-base-2 C.  Three questions only have 8 possible outcomes, so those aren't enough questions for 12 creatures.
 4. If we allow identity questions, N <= C-1.
-5. Another way to ask the main question is, What are the smallest subset's of Z's columns that have all unique entries?
+5. Another way to ask the main question is, What are the smallest subsets of Z's columns that have all unique entries?
 
 In case some smarty is already thinking, "well, you know...", let's indulge in an aside about composite questions:
 1. If we allow identity questions AND composite questions, then this quickly devolves to a binary search, As an example, for a-h: { "Is it a, b, c, or d?", "Is it a, b, e, or f?", "Is it a, c, e, or g?" } is a sufficient and minimal list.
@@ -47,7 +51,7 @@ Here's some things to code
    * Make Z's representation serializable/Create a file format/DSL.
    * Add some validation
    * A representation of L
-   * Methods that return with any give L is sufficient, and whether it contains identity attributes.
+   * Methods that return whether any give L is sufficient, and whether it contains identity attributes.
    * A brute-force method that finds solutions.
    * Attempt to find a faster algorithm.
 
