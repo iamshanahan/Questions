@@ -3,7 +3,7 @@ package questions;
 import java.util.*;
 
 /**
- * The workhorse class for this project.  CreatureTruthTable represents a table of whether the answer is yes or no
+ * CreatureTruthTable represents a table of whether the answer is yes or no
  * to the question "Does creature #c have attribute #a?".  Creature names and attribute descriptions are omitted
  * because they don't affect the algorithm of interests.  
  * 

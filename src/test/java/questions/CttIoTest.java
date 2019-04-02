@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class CttIoTest {
 
-    @Test public void testSerialization() {
+    @Test public void testRoundTrip() {
  
         try {   
         	CreatureTruthTable ctt = new CreatureTruthTable(3,2);
@@ -29,7 +29,7 @@ public class CttIoTest {
     }
     
 
-    @Test public void testSerializationToFile() {
+    @Test public void testRoundTripViaFile() {
     	CreatureTruthTable ctt = new CreatureTruthTable(3,2);
     	ctt.set(0, 0, true);
     	ctt.set(1, 1, true);

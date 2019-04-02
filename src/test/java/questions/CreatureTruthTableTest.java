@@ -155,7 +155,7 @@ public class CreatureTruthTableTest {
     			asList( ctt.idAttr(2), ctt.idAttr(3) ) )
     	);
     	
-    	// The right mixture should work
+    	// The right mixture of column and id should work
     	assertTrue(
     	ctt.listDifferentiatesAmongAll(
     			asList(ctt.regAttr(1), ctt.idAttr(1), ctt.idAttr(3) ) )
