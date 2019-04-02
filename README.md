@@ -3,16 +3,18 @@ Given a set of creatures, how do you construct the best question list to uniquel
 
 # Motivation
 
-There is a pleasant intersection between discrete math problems and computation problems where the answer is an algorithm 
+There is a pleasant intersection between discrete math problems and computation problems where the answer is an algorithm.  A 
+better answer is a more efficient algorithm. Examples include searches, sorts, and graph traversals.  An engineering-student friend mentioned this problem to me and I found it interesting.
+
 In the children's game "twenty questions", one asks a series of boolean questions to eventually identify a creature.  It is obvious to anyone who's played it that the questions are sequentially conditional, that is, what one asks for question 3 will depend on the answers to 1 and 2.  If you first ask, "Is it a fish?", you will only ask, "Is it a shark?" if the answer is "yes".
 
 This project explores the idea that the questions are fixed.  That is, you have to pick all the questions in advance.  So you have some creatures, and you have some yes/no questions or attributes, and you know the answer to the question for each creature.  Your job is to come up with a fixed list of questions whose answers are guaranteed to identify any creature.
 
-For example, if you have "cat", "bat", "cassowary", and "killdeer", you could ask, "Does it have feathers?, and does it fly?".  Then "yes, no" would yield cassowary, while "no, yes" would yield bat.  You could also ask "Is it a cat?, is it a bat?, and is it a cassowary?".  Then any "yes" would give you your answer and "no" would mean killdeer.  We'll call these identity questions.  You always have identity questions, even if I give you no attributes about the creatures.  But in this case asking only identity questions resulted in a longer question list.  You'd kind of like to use identity questions as a last resort.
+For example, if you have "cat", "bat", "cassowary", and "killdeer", you could ask, "Does it have feathers?, and Does it fly?".  Then "yes, no" would yield cassowary, while "no, yes" would yield bat.  You could also ask "Is it a cat?, Is it a bat?, and Is it a cassowary?".  Then any "yes" would give you your answer and "no" would mean killdeer.  We'll call these identity questions.  You always have identity questions, even if I give you no attributes about the creatures.  But in this case asking only identity questions resulted in a longer question list.  You'd kind of like to use identity questions as a last resort.
 
-Now if you add "beaver" to the possibilities, then "no, no" is ambiguous between cat and beaver.  So in order to have enough questions you must either add another piece of information ("Does it have feathers?, does it fly?, and is it the Oregon state animal?") or default to a degenerate identity fact ( "Does it have feathers, does it fly, and is it a beaver?").  Those question lists are tied for length at three questions.
+Now if you add "beaver" to the possibilities, then "no, no" is ambiguous between cat and beaver.  So in order to have enough questions you must either add another piece of information ("Does it have feathers?, does it fly?, and is it the Oregon state animal?") or degenerate to a identity question ( "Does it have feathers, does it fly, and is it a beaver?").  Those question lists are tied for length at three questions.
 
-Let's define some terms.  We have C creatures, named a, b, c, etc.  We have A attributes represented by the natural numbers, 1, 2, ... (1-based because I'm a human).  For each creature-attribute pair, we have a boolean result.  This matrix of booleans is our input, Z (um, for zoo?).  We can picture this as a vector of bitmaps.  In addition, for any Z there are C implicit identity attributes (e.g. "a?"), each of which is false for every creature save one.  We can picture this as an identity matrix tacked onto the right side of that vector of bitmaps.  For any Z there is some set Q of question lists, each containing N questions, and each being sufficient to distinguish among all C creatures.  N is the smallest length a sufficient question list can have.
+Let's define some terms.  We have C creatures, named a, b, c, etc.  We have A attributes represented by the natural numbers, 1, 2, ... (1-based because I'm a human).  For each creature-attribute pair, we have a boolean result.  This matrix of booleans is our input, Z (um, for zoo?).  We can picture this as a vector of bitmaps.  In addition, for any Z there are C implicit identity attributes (e.g. "a?"), each of which is false for every creature save one.  We can picture this as an identity matrix tacked onto the right side of that vector of bitmaps.  For any Z there is some set Q of question lists, each containing N questions, and each being sufficient to distinguish among all C creatures, where N is the smallest length a sufficient question list can have.
 
 To summarize:
    * C = number of creatures
@@ -25,7 +27,7 @@ To summarize:
    * N = the minimum number of questions
    * L = some question list
 
-For example, suppose our input is "a:TTF, b:FFF, c:TTT".  If we ask, "1?,2?" and the answer is "F,F", then we have identified b.  But if the answer is "T,T", both a and b are possible.  Therefore "1?,2?" is not in Q.  But "2?,3?" is.  So is "2?,c?".  So L <= 2.
+For example, suppose our input is "a:TTF, b:FFF, c:TTT".  We could choose as L "1?,2?".  Then if the answer is "F,F", then we have identified b.  But if the answer is "T,T", both a and b are possible.  Therefore "1?,2?" is not in Q.  But "2?,3?" is.  So is "2?,c?".  So N <= 2.
 
 Now we can ask some interesting (to me) questions
 1. How do you generate a minimal question list?
