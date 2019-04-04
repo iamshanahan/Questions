@@ -114,6 +114,11 @@ public class CreatureTruthTable {
     	public boolean get( int creature ) {
     		return CreatureTruthTable.this.table[creature][attrNum];
     	}
+
+    	@Override
+    	public String toString() {
+    		return "A" + attrNum;
+    	}
     }
     
     /**
@@ -145,6 +150,11 @@ public class CreatureTruthTable {
     					". Valid range 0-" + 
     					CreatureTruthTable.this.numCreatures );
     		return identityCreature == inputCreature;
+    	}
+
+    	@Override
+    	public String toString() {
+    		return "C" + identityCreature;
     	}
     }
 

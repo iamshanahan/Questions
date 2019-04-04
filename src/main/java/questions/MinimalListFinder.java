@@ -1,16 +1,16 @@
 
 package questions;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
+import java.io.PrintStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static questions.CreatureTruthTable.Attribute;
 
-public class App {
+public class MinimalListFinder {
 	
     
     public static Set<List<Attribute>> minimalLists( CreatureTruthTable ctt ) throws AvmException {
@@ -24,12 +24,17 @@ public class App {
 		for( int i=0; i<ctt.getNumCreatures(); i++ ) {
 			allAttributes[i+ctt.getNumAttributes()] = ctt.idAttr( i );
 		}
+		int minimalSuccessfulListLength = Integer.MAX_VALUE;
     	ArrayProgressiveSubsetIterator<Attribute> iter =
     			new ArrayProgressiveSubsetIterator<>( allAttributes );
+    			
     	while( iter.hasNext() ) {
     		List<Attribute> list = iter.next();
+    		// Short circuit.  Depends on iterator being non-decreasing
+    		if(  list.size() > minimalSuccessfulListLength ) break;
     		if( ctt.listDifferentiatesAmongAll( list ) ) {
     			resultSet.add( list );
+    			minimalSuccessfulListLength = list.size();
     		}
     	}
     	return resultSet;
@@ -42,5 +47,15 @@ public class App {
     	}
     	CreatureTruthTable ctt = CttIo.read( new FileReader( args[0] ) );
     	Set<List<Attribute>> results = minimalLists( ctt );
+    	emitAsTable(System.out, results);
     }
+
+	public static void emitAsTable( PrintStream out, Set<List<Attribute>> results) {
+		for( List<Attribute> result : results ) {
+    		for( Attribute attr : result ) {
+    			out.print( attr.toString() + ' ' );
+    		}
+    		out.println();
+    	}
+	}
 }
