@@ -19,7 +19,7 @@ public class CttIoTest {
         	String cttString = writer.toString();
         	
         	StringReader reader = new StringReader( cttString );
-        	CreatureTruthTable ctt2 = CttIo.read( reader );
+        	CreatureTruthTable ctt2 = CttIo.readCtt( reader );
             writer.close();
             reader.close();
             assertEquals(ctt, ctt2);
@@ -42,7 +42,7 @@ public class CttIoTest {
             fileWriter.close();
             
             FileReader fileReader = new FileReader(filename);
-            CreatureTruthTable ctt2 = CttIo.read(fileReader);
+            CreatureTruthTable ctt2 = CttIo.readCtt(fileReader);
             fileReader.close();
             assertEquals(ctt, ctt2);
         } catch( Exception ex) { 
@@ -51,9 +51,22 @@ public class CttIoTest {
     }
     
     @Test public void testErroneousInput() {
+
+    	// Too many entries on dimension line
+        try {   
+        	CttIo.readCtt( new StringReader(
+        			"2 2 extra\n" +
+        			"1 1\n" +
+        			"1 1\n" +
+        			"EOD") );
+        	fail();
+        } catch(Exception ex) {
+        	// OK
+        }
+        
     	// Too few attributes
         try {   
-        	CttIo.read( new StringReader(
+        	CttIo.readCtt( new StringReader(
         			"2 3\n" +
         			"1 1\n" +
         			"1 1\n" +
@@ -65,7 +78,7 @@ public class CttIoTest {
 
     	// Too few creatures
         try {   
-        	CttIo.read( new StringReader(
+        	CttIo.readCtt( new StringReader(
         			"3 2\n" +
         			"1 1\n" +
         			"1 1\n" +
@@ -77,7 +90,7 @@ public class CttIoTest {
         
     	// Too many attributes
         try {   
-        	CttIo.read( new StringReader(
+        	CttIo.readCtt( new StringReader(
         			"3 2\n" +
         			"1 1 1\n" +
         			"1 1 1\n"  +
@@ -90,7 +103,7 @@ public class CttIoTest {
         
     	// Too many creatures
         try {   
-        	CttIo.read( new StringReader(
+        	CttIo.readCtt( new StringReader(
         			"2 3\n" +
         			"1 1 1\n" +
         			"1 1 1\n"  +
@@ -103,7 +116,7 @@ public class CttIoTest {
         
     	// Invalid attribute -- only 1 and 0 allowed;
         try {   
-        	CttIo.read( new StringReader(
+        	CttIo.readCtt( new StringReader(
         			"3 2\n" +
         			"1 1\n" +
         			"1 1\n"  +

@@ -29,4 +29,28 @@ dependencies {
 }
 
 // Define the main class for the application
-mainClassName = 'questions.App'
+mainClassName = 'questions.FindMinimalLists'
+
+
+// Added by bshanahan
+task(createCtt, dependsOn: 'classes', type: JavaExec) {
+    group = 'Project execution tasks'
+    description = 'Generates an annotated creature truth table from user input'
+    main = 'questions.CreateCreatureTruthTable'
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+}
+
+task(findMinimalLists, dependsOn: 'classes', type: JavaExec) {
+    group = 'Project execution tasks'
+    description = 'Creates a list of question lists for a given creature truth table'
+    main = 'questions.DisplayQuestionLists'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task(displayQLists, dependsOn: 'classes', type: JavaExec) {
+    group = 'Project execution tasks'
+    description = 'Displays list of question lists or a particular question list'
+    main = 'questions.DisplayQuestionLists'
+    classpath = sourceSets.main.runtimeClasspath
+}

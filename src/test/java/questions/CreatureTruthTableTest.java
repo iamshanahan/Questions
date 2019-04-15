@@ -18,7 +18,7 @@ public class CreatureTruthTableTest {
     	for(int i=0; i<line.length; i++) {
     		table += line[i] + '\n';
     	}
-    	return CttIo.read(new StringReader(table) );
+    	return CttIo.readCtt(new StringReader(table) );
     	
     }
 

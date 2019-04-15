@@ -1,0 +1,74 @@
+30 12
+0 0 0 0 0 0 1 1 0 1 0 0 
+0 1 0 0 0 0 1 0 0 0 1 0 
+1 0 0 0 0 0 1 0 0 0 1 0 
+1 0 1 0 0 0 1 0 1 0 0 0 
+0 1 0 1 0 1 1 0 0 0 0 0 
+1 0 0 0 0 0 1 0 0 0 0 0 
+1 0 1 0 0 1 1 0 0 0 0 0 
+0 1 0 1 0 1 0 1 0 0 0 0 
+1 0 0 0 0 0 1 1 0 0 0 0 
+0 1 0 0 1 0 1 0 0 0 0 0 
+1 0 1 0 0 0 1 1 0 0 0 1 
+1 0 1 1 0 0 1 1 1 0 0 0 
+1 0 1 0 0 0 1 1 1 1 0 0 
+1 0 1 0 0 0 1 0 1 0 0 1 
+0 0 0 0 1 0 1 1 0 0 0 0 
+1 0 0 0 0 0 1 0 0 0 0 0 
+1 0 0 0 0 1 1 0 0 0 0 0 
+1 0 0 0 0 0 1 1 0 0 0 0 
+0 0 0 0 1 0 1 0 0 0 0 0 
+1 0 1 0 0 0 1 1 1 0 0 0 
+1 0 0 1 0 0 1 1 0 0 0 0 
+0 0 0 1 0 0 1 0 0 0 0 0 
+0 0 0 0 0 0 1 0 0 0 0 0 
+0 1 0 1 0 0 1 0 0 0 0 0 
+0 1 0 1 0 1 0 1 0 0 0 1 
+1 0 0 0 0 1 1 0 0 0 0 0 
+0 1 0 1 0 0 0 0 0 0 0 0 
+0 0 0 0 1 1 1 0 0 0 0 0 
+1 0 0 0 0 0 1 0 0 0 0 0 
+1 0 0 0 0 0 1 1 0 1 1 0 
+EOD
+Yellowhammer
+Willow ptarmigan
+Cactus wren
+Northern mockingbird
+California quail
+Lark bunting
+American robin
+Delaware Blue Hen
+Brown thrasher
+Nene
+Mountain bluebird
+Northern cardinal
+Eastern goldfinch
+Western meadowlark
+Brown pelican
+Chickadee
+Baltimore oriole
+Black-capped chickadee
+Common loon
+Eastern bluebird
+Purple finch
+Greater roadrunner
+Scissor-tailed flycatcher
+Ruffed grouse
+Rhode Island Red
+Carolina wren
+Ring-necked pheasant
+California gull
+Hermit thrush
+Willow goldfinch
+Is it a songbird
+Has it traditionally been considered food
+Is it of multiple states
+Is it crested
+Is it aquatic/marine
+Does its name contain a proper place name
+Is it native
+Does its name contain a color
+Does its name contain a direction
+Is its name different from its common name
+Does it have a plant in its name
+Does it have a habitat in its name

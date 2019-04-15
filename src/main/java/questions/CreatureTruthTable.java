@@ -117,8 +117,12 @@ public class CreatureTruthTable {
 
     	@Override
     	public String toString() {
-    		return "A" + attrNum;
+    		return "A " + attrNum;
     	}
+
+		public int getQuestionNum() {
+			return attrNum;
+		}
     }
     
     /**
@@ -151,11 +155,40 @@ public class CreatureTruthTable {
     					CreatureTruthTable.this.numCreatures );
     		return identityCreature == inputCreature;
     	}
+    	public int getCreatureNum() {
+    		return identityCreature;
+    	}
 
     	@Override
     	public String toString() {
-    		return "C" + identityCreature;
+    		return "I " + identityCreature;
     	}
+    }
+    
+    public class Answer {
+    	final Attribute attr;
+    	final boolean value;
+    	public Answer( Attribute attr, boolean value ) {
+    		this.attr = attr;
+    		this.value = value;
+    	}
+    }
+    
+    public boolean matches( int creatureNum, List<Answer> answers ) throws AvmException {
+    	for( Answer answer : answers ) {
+    		if( answer.attr.get( creatureNum ) != answer.value ) return false;
+    	}
+    	return true;
+    }
+    
+    public List<Integer> getAllMatches( List<Answer> answers ) throws AvmException {
+    	List<Integer> matches = new ArrayList<>();
+    	for( int creature = 0; creature < numCreatures; creature++ ) {
+    		if( matches( creature, answers) ) {
+    			matches.add( creature );
+    		}
+    	}
+    	return matches;
     }
 
     /**

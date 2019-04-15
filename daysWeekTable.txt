@@ -1,0 +1,22 @@
+7 6
+1 0 0 1 1 1 
+1 0 0 0 0 1 
+1 0 1 1 0 0 
+1 0 1 0 0 0 
+1 1 0 1 0 0 
+1 1 0 0 0 0 
+1 0 1 1 1 1 
+EOD
+Sunday
+Monday
+Tuesday
+Wednesday
+Thursday
+Friday
+Saturday
+Does it end in 'y'
+Is second letter a consonant
+Does it have 3 vowels
+Does it have a 'u'
+Is it a weekend
+Does its name resemble the English word for the referenced celestial object

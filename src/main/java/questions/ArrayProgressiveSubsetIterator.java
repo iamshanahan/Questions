@@ -60,10 +60,29 @@ public class ArrayProgressiveSubsetIterator<T> implements Iterator<List<T>> {
 	int nextListLength;
 
 	private RecursiveArrayIterator iter;
-	// null until currListLength is incremented, then never null
+	// null until nextListLength is incremented, then never null
 	
 	List<T> nextList;
 
+	/**
+	 * The containing class's responsibilities include
+	 *    * Holding onto the input array
+	 *    * Keeping track of the current length of subsets we're iterating through
+	 *    * Each time next is called, initializing the return List
+	 *    * Holding onto the root iterator
+	 * 
+	 * The first time ArrayProgressive is called, it returns the empty set.
+	 * The second time it starts a leaf iterator that runs from 0 to length - 1.
+	 * After that is done, it starts a branch iterator that runs from 0 to length - 2.
+	 * That in turn immediately starts a leaf iterator that runs from 1 to length - 1.
+	 * Once that leaf iterator has run its course, the branch iterator increments to 
+	 * 1 and starts a leaf iterator that runs from 2 to length -1.
+	 * Each time the length of subsets increases, we add one more iterator to the chain.
+	 * Finally the number of iterators equals the length of the input array, nobody has any
+	 * room to move, one result is returned, and hasNext becomes false.
+	 * @author bshanahan
+	 *
+	 */
 	public ArrayProgressiveSubsetIterator( T[] array ) {
 		this.array = array;
 		nextListLength = 0;
@@ -96,6 +115,18 @@ public class ArrayProgressiveSubsetIterator<T> implements Iterator<List<T>> {
 		return nextList;
 	}
 	
+	/**
+	 * The logic about what to do for next and hasNext is totally different
+	 * depending on whether there's another iterator after you on the chain.
+	 * So to avoid a bunch of 'if iter == null ... else' code, they are separate
+	 * types.
+	 * 
+	 * Since the enclosing class contains the ultimate result array, these iterators
+	 * each just add their value to that result and return null.
+	 * 
+	 * @author bshanahan
+	 *
+	 */
 	private interface RecursiveArrayIterator extends Iterator<Void> {
 		
 	}
@@ -127,6 +158,7 @@ public class ArrayProgressiveSubsetIterator<T> implements Iterator<List<T>> {
 			return null;
 		}
 	}
+	
 	private class BranchIterator implements RecursiveArrayIterator {
 
 		private int position;
@@ -173,6 +205,3 @@ public class ArrayProgressiveSubsetIterator<T> implements Iterator<List<T>> {
 		}
 	}
 }
-
-
-// Example Array: 0:A 1:B 2:C length e

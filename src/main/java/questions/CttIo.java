@@ -4,8 +4,13 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
+
+import questions.CreatureTruthTable.Attribute;
 
 /**
  * Serialization concern for CreatureTruthTable.  Implementation a bit unsophisticated but simple text format is nice.
@@ -27,7 +32,44 @@ import java.util.StringTokenizer;
  *
  */
 public class CttIo {
-    // Serialization
+
+	public static void write( Writer out, CttAnnotation annotation ) throws IOException {
+		
+		write( out, annotation.getCtt() );
+
+		BufferedWriter bufferedOut = new BufferedWriter( out );
+		int numCreatures = annotation.getNumCreatures();
+		int numQuestions = annotation.getNumQuestions();
+		for( int i=0; i<numCreatures; i++ ) {
+			bufferedOut.write( annotation.getCreatureName( i ) );
+			bufferedOut.write("\n");
+		}
+		for( int i=0; i< numQuestions; i++ ) {
+			bufferedOut.write( annotation.getQuestion( i ) );
+			bufferedOut.write("\n");
+		}
+		bufferedOut.flush();
+	}
+	
+	public static CttAnnotation readCttAnnotation( Reader in ) throws IOException, AvmException {
+		BufferedReader bufferedIn = new BufferedReader( in );
+		CreatureTruthTable ctt = readCtt( bufferedIn );
+
+		List<String> creatures = new ArrayList<>(ctt.getNumCreatures() );
+		for( int i=0; i<ctt.getNumCreatures(); i++ ) {
+			String readLine = bufferedIn.readLine();
+			if( readLine  == null ) throw new AvmException( "Creature names and question text missing" );
+			creatures.add( readLine );
+		}
+		List<String> questions = new ArrayList<>(ctt.getNumAttributes() );
+		for( int i=0; i<ctt.getNumAttributes(); i++ ) {
+			String readLine = bufferedIn.readLine();
+			if( readLine  == null ) throw new AvmException( "Question text missing" );
+			questions.add( readLine );
+		}
+		return new CttAnnotation( ctt, creatures, questions );
+	}
+	
     public static void write( Writer out, CreatureTruthTable ctt ) throws IOException {
 		BufferedWriter bufferedOut = new BufferedWriter( out );
 		int numCreatures = ctt.getNumCreatures();
@@ -43,15 +85,19 @@ public class CttIo {
 			}
 			bufferedOut.write('\n');
 		}
-		bufferedOut.write("EOD");
+		bufferedOut.write("EOD\n");
 		bufferedOut.flush();
     }
     
-	public static CreatureTruthTable read( Reader in ) throws IOException, AvmException {
-		BufferedReader bufferedIn = new BufferedReader( in );
+	public static CreatureTruthTable readCtt( Reader in ) throws IOException, AvmException {
+		return readCtt( new BufferedReader( in ) );
+	}
+    
+	private static CreatureTruthTable readCtt( BufferedReader bufferedIn ) throws IOException, AvmException {
 		StringTokenizer tk = new StringTokenizer( bufferedIn.readLine() );
 		int numCreatures = Integer.parseInt(tk.nextToken());
 		int numAttributes = Integer.parseInt(tk.nextToken());
+		if( tk.hasMoreElements() )throw new AvmException("More than 2 entries on first line");
 		CreatureTruthTable creatureTruthTable = new CreatureTruthTable(numCreatures, numAttributes);
 		for( int i=0; i<numCreatures; i++ ) {
 			tk = new StringTokenizer( bufferedIn.readLine() );
@@ -77,6 +123,48 @@ public class CttIo {
 		if( !tk.nextToken().equals("EOD") ) throw new AvmException("EOD marker expected--too many creatures or extra data");
 		
 		return creatureTruthTable;
+	}
+
+	public static Reader read( String ...strings ) throws IOException, AvmException {
+		StringBuffer buffer = new StringBuffer();
+		for( String string : strings ) {
+			buffer.append( string ).append( '\n' );
+		}
+		return new StringReader( buffer.toString() );
+	}
+
+
+	public static void writeQuestionListList( Writer out, List<List<Attribute>> results) throws IOException {
+		for( List<Attribute> result : results ) {
+    		for( Attribute attr : result ) {
+    			out.write( attr.toString() + ' ' );
+    		}
+    		out.write('\n');
+    	}
+	}
+
+	public static List<List<Attribute>> readQuestionListList(Reader in, CreatureTruthTable ctt ) throws IOException, AvmException {
+		List<List<Attribute>> resultSet = new ArrayList<>();
+		BufferedReader bufferedIn = new BufferedReader( in );
+		String line = bufferedIn.readLine();
+		while( line != null ) {
+			List<Attribute> resultList = new ArrayList<>();
+			StringTokenizer tk = new StringTokenizer( line );
+			while( tk.hasMoreElements() ) {
+				char questionType = tk.nextToken().charAt( 0 );
+				int number = Integer.parseInt( tk.nextToken() );
+				switch( questionType ) {
+				case 'A':
+					resultList.add( ctt.regAttr( number ) );
+					break;
+				case 'I':
+					resultList.add( ctt.idAttr( number ) );
+				}				
+			}
+			resultSet.add( resultList );
+			line = bufferedIn.readLine();
+		}
+		return resultSet;
 	}
 
 }
