@@ -25,15 +25,20 @@ There are a few concepts one must understand to use this project:
 
 ## Usage
 
-Every gradle project task takes some number of files as arguments.  Execute them without arguments to see usage statements.  Note that to pass arguments to a gradle target one must use --args='arg1 arg2'.  Also be aware that interactive input (prompt/response) gets jumbled a little when inside a gradle target task execution.
+To see project execution tasks, run
+```shell
+gradle tasks --all
+```
 
-There is a create-table task that walks the user through building a truth table by asking for creatures, questions, and answers.  The result is a file.
+Every gradle project target takes some number of files as arguments.  Execute them without arguments to see usage statements.  Note that to pass arguments to a gradle target one must use --args='arg1 arg2'.  Also be aware that interactive input (prompt/response) gets jumbled a little when inside a gradle target task execution.
 
-There is a find-minimal-lists task that will take a truth-table file as input and produce a minimal question list set as output.  The result is a file.
+There is a create-table target that walks the user through building a truth table by asking for creatures, questions, and answers.  The result is a file.
 
-There is a task that will take a truth-table file and a question-list-set file and emit information about the question lists.  It can also emit a particular question list in long form.  It emits to stdout.
+There is a find-minimal-lists target that will take a truth-table file as input and produce a minimal question list set as output.  The result is a file.
 
-To be added is a target that actually asks the questions in a list and identifies the correct creature.
+There is a target that will take a truth-table file and a question-list-set file and emit information about the question lists.  It can also emit a particular question list in long form.  It emits to stdout.
+
+There is a quiz-me target that actually asks the user the questions in a list and identifies the correct creature.
 
 It may be enlightening to look through the sample test files.
 
