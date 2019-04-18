@@ -54,3 +54,11 @@ task(displayQLists, dependsOn: 'classes', type: JavaExec) {
     main = 'questions.DisplayQuestionLists'
     classpath = sourceSets.main.runtimeClasspath
 }
+
+task(quizMe, dependsOn: 'classes', type: JavaExec) {
+    group = 'Project execution tasks'
+    description = 'Identifies creature from user input'
+    main = 'questions.QuizMe'
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+}
