@@ -46,7 +46,7 @@ It may be enlightening to look through the sample test files.
 
 Complexity goes through the roof pretty fast, worst-case is roughly n^3 * 2^n.  The state-birds truth table remains unsolved.  I killed it after 11 hours.
 
-Figuring out reduced-complexity approach is the real problem.  This project currently represents all the objects
+Figuring out reduced-complexity approach is the real problem.  This project currently represents all the objects in the problme space, enabling improved algorithms to be tested.  At least that's the hope.
 
 
 ## Contributing
