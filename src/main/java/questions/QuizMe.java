@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+import questions.CreatureTruthTable.Answer;
 import questions.CreatureTruthTable.Attribute;
 import questions.CreatureTruthTable.IdentityAttribute;
 import questions.CreatureTruthTable.RegularAttribute;
@@ -63,47 +64,19 @@ public class QuizMe {
 	private static void identifyCreature(int listNo, CttAnnotation aCtt, List<List<Attribute>> questionListList, PrintStream out, InputStream in) throws AvmException {
 		Scanner input = new Scanner( in );
 		List<Attribute> questionList = questionListList.get( listNo );
-		List<Boolean> answers = new ArrayList<>( questionList.size() );
-		Iterator<Attribute> questionIter = questionList.iterator();
-		while( questionIter.hasNext() ) {
-			Attribute attr = questionIter.next();
-			if( attr.toString().startsWith( "I" ) ) {
-				out.println( "Is it '" + aCtt.getCreatureName( ((IdentityAttribute)attr).getCreatureNum() ) + "'?");
+		List<Answer> answers = new ArrayList<>( questionList.size() );
+		for( Attribute question : questionList ) {
+			if( question.toString().startsWith( "I" ) ) {
+				out.println( "Is it '" + aCtt.getCreatureName( ((IdentityAttribute)question).getCreatureNum() ) + "'?");
 			} else {
-				out.println( aCtt.getQuestion( ((RegularAttribute)attr).getQuestionNum() ) + "?");
+				out.println( aCtt.getQuestion( ((RegularAttribute)question).getQuestionNum() ) + "?");
 			}
-			answers.add( nextResponse( out, input, aCtt, attr ) );
+			answers.add( aCtt.getCtt().new Answer( question, nextResponse( out, input, aCtt, question ) ) );
 		}
-		List<Integer> creatures = findMatch( aCtt.getCtt(), questionList, answers );
+		List<Integer> creatures = aCtt.getCtt().getAllMatches( answers );
 		for( Integer creature : creatures ) {
 			out.println( aCtt.getCreatureName( creature ) );
 		}
-	}
-
-	private static List<Integer> findMatch(CreatureTruthTable ctt,
-			List<Attribute> questionList, List<Boolean> answers) throws AvmException {
-		List<Integer> results = new ArrayList<>();
-		for( int creature = 0; creature < ctt.getNumCreatures(); creature++ ) {
-			if( matches( ctt, questionList, answers, creature) ) {
-				results.add( creature );
-			}
-		}
-		// TODO Auto-generated method stub
-		return results;
-	}
-
-	private static boolean matches(CreatureTruthTable ctt,
-			List<Attribute> questionList, List<Boolean> answers, int creature) throws AvmException {
-		Iterator<Attribute> attrIter = questionList.iterator();
-		Iterator<Boolean> answerIter = answers.iterator();
-		while( attrIter.hasNext() ) {
-			Attribute attr= attrIter.next();
-			boolean answer = answerIter.next();
-			if( attr.get( creature ) != answer ) return false;
-			
-		}
-		// TODO Auto-generated method stub
-		return true;
 	}
 
 	/**
